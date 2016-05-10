@@ -12,13 +12,13 @@ class PlaceDoc: NSObject {
     var docId: String?
     var geometry: Geometry?
     var name: String?
-    var timestamp: Int?
+    var timestamp: Double?
     
     init?(docId: String?, latitude: Double, longitude: Double, name: String, timestamp: NSDate) {
         self.docId = docId
         self.geometry = Geometry(latitude: latitude, longitude: longitude)
         self.name = name
-        self.timestamp = Int(NSDate().timeIntervalSince1970 * 1000)
+        self.timestamp = (NSDate().timeIntervalSince1970 * 1000)
         //
         super.init()
     }
@@ -30,7 +30,7 @@ class PlaceDoc: NSObject {
             let latitude: Double = coordinates![1]
             let longitude: Double = coordinates![0]
             let name: String? = body["name"] as? String
-            let timestamp: Int? = body["created_at"] as? Int
+            let timestamp: Double? = body["created_at"] as? Double
             self.init(docId: body["_id"] as? String, latitude: latitude, longitude: longitude, name: name!, timestamp: NSDate(timeIntervalSince1970: Double(timestamp!)/1000.0))
         }
         else {
@@ -46,7 +46,7 @@ class PlaceDoc: NSObject {
             let latitude: Double = coordinates![1]
             let longitude: Double = coordinates![0]
             let name: String? = body["name"] as? String
-            let timestamp: Int? = body["created_at"] as? Int
+            let timestamp: Double? = body["created_at"] as? Double
             self.init(docId: doc.docId, latitude: latitude, longitude: longitude, name: name!, timestamp: NSDate(timeIntervalSince1970: Double(timestamp!)/1000.0))
         }
         else {

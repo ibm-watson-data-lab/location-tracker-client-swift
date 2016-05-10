@@ -20,7 +20,7 @@ class LocationDoc: NSObject {
         self.properties = Dictionary<String,String>()
         self.properties["username"] = username
         self.properties["session_id"] = sessionId
-        self.properties["timestamp"] = Int(NSDate().timeIntervalSince1970 * 1000)
+        self.properties["timestamp"] = (NSDate().timeIntervalSince1970 * 1000)
         self.properties["background"] = (background == nil ? false : background)
         //
         super.init()
@@ -35,7 +35,7 @@ class LocationDoc: NSObject {
             var properties: [String:AnyObject]? = body["properties"] as? [String:AnyObject]
             let username: String? = properties!["username"] as? String
             let sessionId: String? = properties!["session_id"] as? String
-            let timestamp: Int? = properties!["timestamp"] as? Int
+            let timestamp: Double? = properties!["timestamp"] as? Double
             let background: Bool? = properties!["background"] as? Bool
             self.init(docId: doc.docId, latitude: latitude, longitude: longitude, username: username!, sessionId: sessionId, timestamp: NSDate(timeIntervalSince1970: Double(timestamp!)/1000.0), background: background)
         }
