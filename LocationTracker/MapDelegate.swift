@@ -19,4 +19,6 @@ protocol MapDelegate {
     func drawRadius(centerCoordinate: CLLocationCoordinate2D, radiusMeters: CLLocationDistance)
     func eraseRadius()
     func centerAndZoom(centerCoordinate: CLLocationCoordinate2D, radiusMeters: CLLocationDistance, animated: Bool)
+    func downloadMap(centerCoordinate: CLLocationCoordinate2D, radiusMeters: CLLocationDistance)
+    func deleteDownloadedMaps()
 }

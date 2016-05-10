@@ -12,6 +12,7 @@ class AppConstants: NSObject {
     
     //static let baseUrl: String = "http://location-tracker-server-nodejs.mybluemix.net"
     static let baseUrl: String = "http://192.168.1.70:6008"
+    //static let baseUrl: String = "http://9.24.6.125:6006"
     
     // MARK: App Settings
     
@@ -29,6 +30,9 @@ class AppConstants: NSObject {
     
     // MARK: Map Providers
     
-    static let mapProviders = ["MapKit"]
-    static let mapProviderDefaultStyleIds: [String:String] = ["MapKit":MapKitMapDelegate.mapDefaultStyleId]
+    static let mapProviders = ["MapKit","Mapbox","ArcGIS"]
+    static let mapProviderDefaultStyleIds: [String:String] = ["MapKit":MapKitMapDelegate.mapDefaultStyleId,
+                                                              "Mapbox":MapboxMapDelegate.mapDefaultStyleId,
+                                                              "ArcGIS":ArcGISMapDelegate.mapDefaultStyleId]
+    
 }

@@ -6,13 +6,17 @@
 //  Copyright © 2016 Mark Watson. All rights reserved.
 //
 
+import ArcGIS
 import CoreLocation
+import Mapbox
 import MapKit
 import UIKit
 
 class MapViewController: UIViewController, LocationMonitorDelegate, CDTHTTPInterceptor, CDTReplicatorDelegate {
 
     @IBOutlet weak var mapView : MKMapView?
+    @IBOutlet weak var mapboxMapView : MGLMapView?
+    @IBOutlet weak var agsMapView : AGSMapView?
     var mapDelegate: MapDelegate?
     var resetZoom = true
     var lastLocationDocMapDownload: LocationDoc? = nil
@@ -73,6 +77,7 @@ class MapViewController: UIViewController, LocationMonitorDelegate, CDTHTTPInter
         if (self.locationDocs.count > 0) {
             self.resetZoom = true
             self.resetMapZoom(self.locationDocs.last!);
+            self.downloadMap(self.locationDocs.last!)
         }
         
         // subscribe to locations
@@ -137,14 +142,31 @@ class MapViewController: UIViewController, LocationMonitorDelegate, CDTHTTPInter
                 // delete downloaded maps on the previous delegate
                 // and reset lastLocationDocMapDownload to trigger a download
                 self.lastLocationDocMapDownload = nil
+                self.mapDelegate!.deleteDownloadedMaps()
             }
             if (previousMapDelegate) {
                 // if the map provider changed then remove all pins from the previous map provider
                 self.removeAllPlacePins()
                 self.removeAllLocationPins()
             }
-            self.mapDelegate = MapKitMapDelegate(mapView: self.mapView!)
-            self.mapView?.hidden = false
+            if (AppState.mapProvider == "ArcGIS") {
+                self.mapDelegate = ArcGISMapDelegate(mapView: self.agsMapView!)
+                self.agsMapView?.hidden = false
+                self.mapboxMapView?.hidden = true
+                self.mapView?.hidden = true
+            }
+            else if (AppState.mapProvider == "Mapbox") {
+                self.mapDelegate = MapboxMapDelegate(mapView: self.mapboxMapView!)
+                self.agsMapView?.hidden = true
+                self.mapboxMapView?.hidden = false
+                self.mapView?.hidden = true
+            }
+            else {
+                self.mapDelegate = MapKitMapDelegate(mapView: self.mapView!)
+                self.agsMapView?.hidden = true
+                self.mapboxMapView?.hidden = true
+                self.mapView?.hidden = false
+            }
             if (previousMapDelegate) {
                 // if the map provider changed then add all pins to the new map provider
                 self.addAllLocationPins()
@@ -163,6 +185,32 @@ class MapViewController: UIViewController, LocationMonitorDelegate, CDTHTTPInter
         }
     }
     
+    func downloadMap(lastLocationDoc: LocationDoc) {
+        var performDownload = false
+        if (lastLocationDocMapDownload == nil) {
+            performDownload = true
+        }
+        else {
+            let location1 = CLLocation(latitude:lastLocationDoc.geometry!.latitude,longitude: lastLocationDoc.geometry!.longitude);
+            let location2 = CLLocation(latitude:lastLocationDocMapDownload!.geometry!.latitude,longitude: lastLocationDocMapDownload!.geometry!.longitude);
+            let distance = (location1.distanceFromLocation(location2) )
+            performDownload = (distance > ((AppConstants.offlineMapRadiusMiles*AppConstants.metersPerMile) / 2.0))
+        }
+        if (performDownload) {
+            self.lastLocationDocMapDownload = lastLocationDoc
+            // download after 10 seconds
+            // when the download is running in Mapbox it causes delays to the UI
+            // this gives us some time to render the map
+            let seconds = 10.0
+            let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
+            let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            dispatch_after(dispatchTime, dispatch_get_main_queue(), {
+                let coordinate: CLLocationCoordinate2D  = CLLocationCoordinate2D(latitude: lastLocationDoc.geometry!.latitude, longitude: lastLocationDoc.geometry!.longitude)
+                self.mapDelegate?.downloadMap(coordinate, radiusMeters:AppConstants.offlineMapRadiusMiles*AppConstants.metersPerMile)
+            })
+        }
+    }
+    
     // MARK: LocationMonitorDelegate Members
     
     func locationManagerEnabled() {
@@ -178,6 +226,8 @@ class MapViewController: UIViewController, LocationMonitorDelegate, CDTHTTPInter
         self.addLocation(locationDoc, drawPath: true, drawRadius: true)
         // reset map zoom
         self.resetMapZoom(locationDoc)
+        // download map offline
+        self.downloadMap(locationDoc)
         // save location to datastore
         if (createLocationDoc(locationDoc)) {
             syncLocations(.Push)

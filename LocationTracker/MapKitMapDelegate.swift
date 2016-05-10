@@ -99,6 +99,14 @@ class MapKitMapDelegate: NSObject, MapDelegate, MKMapViewDelegate {
         self.mapView.setRegion(region, animated: animated)
     }
     
+    func downloadMap(centerCoordinate: CLLocationCoordinate2D, radiusMeters: CLLocationDistance) {
+        // automatically supported by MapKit
+    }
+    
+    func deleteDownloadedMaps() {
+        // automatically supported by MapKit
+    }
+    
     // MARK: MKMapViewDelegate Members
     
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
