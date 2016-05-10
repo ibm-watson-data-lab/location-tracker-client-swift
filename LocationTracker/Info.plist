@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.8</string>
+	<string>1.0.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -30,9 +30,9 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Describe why your application wants to track your location even when the app is not in the foreground. Apple only allows certain types of applications to track location always.</string>
+	<string>The Location Tracker will track your location at all times. It will track &quot;significant changes&quot; while running in the background. See Apple&apos;s documentation for more information.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Describe why your application wants to track location.</string>
+	<string>The Location Tracker will only track your location while running in the foreground.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
