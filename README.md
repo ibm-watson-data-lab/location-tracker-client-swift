@@ -8,7 +8,9 @@ The Location Tracker app supports offline-first, Cloudant Sync, and is implement
 
 ### Architecture Diagram
 
-TBD
+### Architecture Diagram
+
+![Architecture of Location Tracker](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2ArchDiagram1Sm.png)
 
 ## Running with Xcode
 
@@ -17,14 +19,14 @@ Get the project and change into the project directory:
     $ git clone https://github.com/ibm-cds-labs/location-tracker-client-swift.git
     $ cd location-tracker-client-swift
 
-Install the project's dependencies:
+1. Install the project's dependencies:
 
     $ pod install
 
 
-Open the workspace in Xcode
-Open AppConstants.swift
-Change the baseUrl to point to your Location Tracker Server running on Bluemix
+2. Open the workspace in Xcode
+3. Open AppConstants.swift
+4. Change the baseUrl to point to your Location Tracker Server running on Bluemix
 
 ## License
 
