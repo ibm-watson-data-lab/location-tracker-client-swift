@@ -6,7 +6,7 @@ The Location Tracker app is an iOS app developed in Swift to be used in conjunct
 
 The Location Tracker app supports offline-first, Cloudant Sync, and is implemented on a database-per-user architecture. When a user registers, a specific database is created for that user and is used to track only that user's locations. In addition, the server configures continuous replication for each user-specific database into a consolidated database where all locations can be queried. See the architecture diagram below for more information:
 
-![Architecture of Location Tracker](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2ArchDiagram1Sm.png)
+![Architecture of Location Tracker](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2ArchDiagram1.png)
 
 When you run the Location Track app for the first time register as a new user:
 
