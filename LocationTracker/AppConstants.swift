@@ -10,7 +10,7 @@ class AppConstants: NSObject {
 
     // MARK: Server Information
     
-    //static let baseUrl: String = "http://location-tracker-server-nodejs.mybluemix.net"
+    //static let baseUrl: String = "http://location-tracker-XXX.mybluemix.net"
     static let baseUrl: String = "http://192.168.1.70:6008"
     
     // MARK: App Settings
