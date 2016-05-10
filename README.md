@@ -12,11 +12,11 @@ When you run the Location Track app for the first time register as a new user:
 
 ![Location Tracker App Register](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2AppRegister.png)
 
-Once you register a new database will be created specifically to track locations for that user.
+Once you register, a new database will be created specifically to track locations for that user.
 
 ![Location Tracker Cloudant User Location](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2CloudantUserLoc.png)
 
-The Location Tracker app tracks a users as they move. Blue pins mark each location recorded by the app. A blue line is drawn over the path the user has travelled. Each time the Location Tracker app records a new location a radius-based geo query is performed in Cloudant to find nearby places. The radius is represented by a green circle. Places are displayed as green pins:
+The Location Tracker app tracks users as they move. Blue pins mark each location recorded by the app. A blue line is drawn over the path the user has travelled. Each time the Location Tracker app records a new location a radius-based geo query is performed in Cloudant to find nearby places. The radius is represented by a green circle. Places are displayed as green pins:
 
 ![Location Tracker App Map](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2AppMap.png)
 
@@ -27,6 +27,8 @@ The Location Tracker app uses [Cloudant Sync for iOS](https://github.com/cloudan
 All locations are stored in a local datastore and synced to the server. The Location Tracker app can operate completely offline (locations can only be tracked if device has clear sight to satellites). Places can only be queried while online, but are stored locally for offline usage.
 
 ## Running with Xcode
+
+Make sure you have a [Location Tracker Server](https://github.com/ibm-cds-labs/location-tracker-server-nodejs) configured and running. 
 
 Clone the project and change into the project directory:
 
@@ -48,6 +50,10 @@ Find AppConstants.swift and change the baseUrl to point to your Location Tracker
 <pre>
 static let baseUrl: String = "http://location-tracker-XXX.mybluemix.net"
 </pre>
+
+Run the project in the iOS Simulator, grant the app access to track your location, and configure the debug location to "Freeway Drive":
+
+ ![Location Tracker App Simulator](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2AppSimulator.png)
 
 ## License
 
