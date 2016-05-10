@@ -4,27 +4,50 @@ The Location Tracker app is an iOS app developed in Swift to be used in conjunct
 
 ## How it works
 
-The Location Tracker app supports offline-first, Cloudant Sync, and is implemented on a database-per-user architecture. When a user registers, a specific database is created for that user and is used to track only that user's locations. In addition, the server configures continuous replication for each user-specific database into a consolidated database where all locations can be queried (location_tracker_all). See the architecture diagram below for more information.
-
-### Architecture Diagram
+The Location Tracker app supports offline-first, Cloudant Sync, and is implemented on a database-per-user architecture. When a user registers, a specific database is created for that user and is used to track only that user's locations. In addition, the server configures continuous replication for each user-specific database into a consolidated database where all locations can be queried. See the architecture diagram below for more information:
 
 ![Architecture of Location Tracker](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2ArchDiagram1Sm.png)
 
+When you run the Location Track app for the first time register as a new user:
+
+![Location Tracker App Register](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2AppRegister.png)
+
+Once you register a new database will be created specifically to track locations for that user.
+
+![Location Tracker Cloudant User Location](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2CloudantUserLoc.png)
+
+The Location Tracker app tracks a users as they move. Blue pins mark each location recorded by the app. A blue line is drawn over the path the user has travelled. Each time the Location Tracker app records a new location a radius-based geo query is performed in Cloudant to find nearby places. The radius is represented by a green circle. Places are displayed as green pins:
+
+![Location Tracker App Map](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2AppMap.png)
+
+The Location Tracker app uses [Cloudant Sync for iOS](https://github.com/cloudant/CDTDatastore) to store locations locally and sync them to Cloudant:
+
+ ![Location Tracker Cloudant Map](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2CloudantUserLoc3.png)
+
+All locations are stored in a local datastore and synced to the server. The Location Tracker app can operate completely offline (locations can only be tracked if device has clear sight to satellites). Places can only be queried while online, but are stored locally for offline usage.
+
 ## Running with Xcode
 
-Get the project and change into the project directory:
+Clone the project and change into the project directory:
 
     $ git clone https://github.com/ibm-cds-labs/location-tracker-client-swift.git
     $ cd location-tracker-client-swift
 
-1. Install the project's dependencies:
+The Location Tracker app uses [Cocoa Pods](https://cocoapods.org/) to manage dependencies. If you don't have Cocoa Pods installed you can install it using gem:
+
+    $ sudo gem install cocoapods
+
+Once you have Cocoa Pods install run the pod command:
 
     $ pod install
 
+In Xcode open the LocationTracker.xcworkspace project (note: Be sure to open the workspace project and not the xcode project).
 
-2. Open the workspace in Xcode
-3. Open AppConstants.swift
-4. Change the baseUrl to point to your Location Tracker Server running on Bluemix
+Find AppConstants.swift and change the baseUrl to point to your Location Tracker Server running on Bluemix, or locally:
+
+<pre>
+static let baseUrl: String = "http://location-tracker-XXX.mybluemix.net"
+</pre>
 
 ## License
 
