@@ -45,7 +45,7 @@ Once you have Cocoa Pods install run the pod command:
 
     $ pod install
 
-In Xcode open the LocationTracker.xcworkspace project (note: Be sure to open the workspace project and not the xcode project).
+In Xcode open LocationTracker.xcworkspace (note: Be sure to open the workspace and not the xcode project).
 
 Open the AppConstants.swift file in LocationTracker > LocationTracker. Change the baseUrl to point to your Location Tracker Server running on Bluemix or locally:
 
