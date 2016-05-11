@@ -4,6 +4,8 @@ The Location Tracker app is an iOS app developed in Swift to be used in conjunct
 
 ## How it works
 
+The Location Tracker app tracks user locations and stores those locations in Cloudant. 
+
 The Location Tracker app supports offline-first, Cloudant Sync, and is implemented on a database-per-user architecture. When a user registers, a specific database is created for that user and is used to track only that user's locations. In addition, the server configures continuous replication for each user-specific database into a consolidated database where all locations can be queried. See the architecture diagram below for more information:
 
 ![Architecture of Location Tracker](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2ArchDiagram1.png)
@@ -45,13 +47,13 @@ Once you have Cocoa Pods install run the pod command:
 
 In Xcode open the LocationTracker.xcworkspace project (note: Be sure to open the workspace project and not the xcode project).
 
-Find AppConstants.swift and change the baseUrl to point to your Location Tracker Server running on Bluemix, or locally:
+Open the AppConstants.swift file in LocationTracker > LocationTracker. Change the baseUrl to point to your Location Tracker Server running on Bluemix or locally:
 
 <pre>
 static let baseUrl: String = "http://location-tracker-XXX.mybluemix.net"
 </pre>
 
-Run the project in the iOS Simulator, grant the app access to track your location, and configure the debug location to "Freeway Drive":
+Click the play button to run the project in the iOS Simulator. Register as a new user as described above, grant the app access to track your location, and configure the debug location to "Freeway Drive":
 
  ![Location Tracker App Simulator](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2AppSimulator.png)
 
