@@ -17,9 +17,9 @@ class AppConstants: NSObject {
     static let locationDisplayCount = 100
     static let minMetersLocationAccuracy : Double = 25
     static let minMetersLocationAccuracyBackground : Double = 100
-    static let minMetersBeteenLocations : Double = 15
-    static let minMetersBeteenLocationsBackground : Double = 100
-    static let minSecondsBeteenLocations : Double = 15
+    static let minMetersBetweenLocations : Double = 15
+    static let minMetersBetweenLocationsBackground : Double = 100
+    static let minSecondsBetweenLocations : Double = 15
     static let initialMapZoomRadiusMiles : Double = 5
     static let offlineMapRadiusMiles: Double = 5
     static let placeRadiusMeters: Double = (2.5 * AppConstants.metersPerMile)

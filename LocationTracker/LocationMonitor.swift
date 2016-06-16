@@ -35,7 +35,7 @@ class LocationMonitor: NSObject, CLLocationManagerDelegate {
             self.locationManager = CLLocationManager()
             self.locationManager?.delegate = self;
             self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-            self.locationManager?.distanceFilter = AppConstants.minMetersBeteenLocations
+            self.locationManager?.distanceFilter = AppConstants.minMetersBetweenLocations
             self.locationManager?.pausesLocationUpdatesAutomatically = false
             if (locationServicesAuthorized) {
                 if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse) {
@@ -198,8 +198,8 @@ class LocationMonitor: NSObject, CLLocationManagerDelegate {
         else {
             let secondsPassed = (NSDate().timeIntervalSince1970 - lastLocationTime!)
             let distance = location.distanceFromLocation(lastLocation!)
-            let minDistance = (inBackground ? AppConstants.minMetersBeteenLocationsBackground : AppConstants.minMetersBeteenLocations)
-            if (distance >= minDistance && secondsPassed > AppConstants.minSecondsBeteenLocations) {
+            let minDistance = (inBackground ? AppConstants.minMetersBetweenLocationsBackground : AppConstants.minMetersBetweenLocations)
+            if (distance >= minDistance && secondsPassed > AppConstants.minSecondsBetweenLocations) {
                 process = true
             }
         }
