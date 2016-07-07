@@ -93,7 +93,8 @@ class LoginViewController: UIViewController {
                         dict["api_key"] as! String,
                         apiPassword: dict["api_password"] as! String,
                         dbName: dict["location_db_name"] as! String,
-                        dbHost: dict["location_db_host"] as! String
+                        dbHost: dict["location_db_host"] as! String,
+                        dbHostProtocol: dict["location_db_host_protocol"] as? String
                     )
                     self.hideActivityIndicatory()
                     self.performSegueWithIdentifier("ShowMap", sender: self)

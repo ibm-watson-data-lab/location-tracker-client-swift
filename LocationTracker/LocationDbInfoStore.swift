@@ -14,6 +14,7 @@ struct LocationDbInfoStore {
     static let apiKeyKey: String = "ApiKey"
     static let dbNameKey: String = "DbName"
     static let dbHostKey: String = "DbHost"
+    static let dbHostProtocolKey: String = "DbHostProtocol"
     
     // MARK: Save Members
     
@@ -47,11 +48,22 @@ struct LocationDbInfoStore {
         AppState.locationDbHost = dbHost
     }
     
-    static func saveApiKeyPasswordDbNameHost(apiKey: String, apiPassword: String, dbName: String, dbHost: String) {
+    static func saveDbHostProtocol(dbHostProtocol: String) {
+        NSUserDefaults.standardUserDefaults().setValue(dbHostProtocol, forKey: dbHostProtocolKey)
+        AppState.locationDbHostProtocol = dbHostProtocol
+    }
+    
+    static func saveApiKeyPasswordDbNameHost(apiKey: String, apiPassword: String, dbName: String, dbHost: String, dbHostProtocol: String?) {
         self.saveApiKey(apiKey)
         self.saveApiPassword(apiPassword, apiKey: apiKey)
         self.saveDbName(dbName)
         self.saveDbHost(dbHost)
+        if (dbHostProtocol != nil) {
+            self.saveDbHostProtocol(dbHostProtocol!)
+        }
+        else {
+            self.deleteDbHostProtocol()
+        }
     }
     
     // MARK: Load Members
@@ -98,9 +110,18 @@ struct LocationDbInfoStore {
         return AppState.locationDbHost;
     }
     
+    static func loadDbHostProtocol() -> String? {
+        if (AppState.locationDbHostProtocol == nil) {
+            let defaults = NSUserDefaults.standardUserDefaults()
+            AppState.locationDbHostProtocol = defaults.valueForKey(dbHostProtocolKey) as? String
+        }
+        return AppState.locationDbHostProtocol;
+    }
+    
     // MARK: Delete Members
     
     static func deleteApiKeyPasswordDbNameHost() {
+        deleteDbHostProtocol()
         deleteDbHost()
         deleteDbName()
         if (AppState.locationDbApiKey != nil) {
@@ -131,5 +152,10 @@ struct LocationDbInfoStore {
     static func deleteDbHost() {
         NSUserDefaults.standardUserDefaults().setValue(nil, forKey: dbHostKey)
         AppState.locationDbHost = nil
+    }
+    
+    static func deleteDbHostProtocol() {
+        NSUserDefaults.standardUserDefaults().setValue(nil, forKey: dbHostProtocolKey)
+        AppState.locationDbHostProtocol = nil
     }
 }

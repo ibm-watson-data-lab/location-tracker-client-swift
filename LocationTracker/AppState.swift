@@ -19,6 +19,7 @@ struct AppState {
     
     // MARK: Cloudant Connection Info
     
+    static var locationDbHostProtocol: String? = nil
     static var locationDbHost: String? = nil
     static var locationDbName: String? = nil
     static var locationDbApiKey: String? = nil

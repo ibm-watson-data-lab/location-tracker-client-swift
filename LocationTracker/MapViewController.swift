@@ -469,9 +469,12 @@ class MapViewController: UIViewController, LocationMonitorDelegate, CDTHTTPInter
     
     // Return an NSURL to the database, with authentication.
     func locationCloudantURL() -> NSURL {
-        // NOTE: Set the URL as follows if syncing directly with Cloudant
         let credentials = "\(AppState.locationDbApiKey!):\(AppState.locationDbApiPassword!)"
-        let url = "https://\(credentials)@\(AppState.locationDbHost!)/\(AppState.locationDbName!)"
+        var hostProtocol = AppState.locationDbHostProtocol;
+        if (hostProtocol == nil) {
+            hostProtocol = "https"
+        }
+        let url = "\(hostProtocol!)://\(credentials)@\(AppState.locationDbHost!)/\(AppState.locationDbName!)"
         return NSURL(string: url)!
     }
     
