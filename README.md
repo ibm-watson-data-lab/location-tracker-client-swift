@@ -1,6 +1,6 @@
 # Location Tracker
 
-The Location Tracker app is an iOS app developed in Swift to be used in conjunction with the [Location Tracker Server](https://github.com/ibm-cds-labs/location-tracker-server-nodejs).
+The Location Tracker app is an iOS app developed in Swift to be used in conjunction with the [Location Tracker Server](https://github.com/ibm-cds-labs/location-tracker-server-nodejs), or the [Location Tracker Envoy Server](https://github.com/ibm-cds-labs/location-tracker-server-envoy).
 
 ## How it works
 
@@ -30,7 +30,7 @@ All locations are stored in a local datastore and synced to the server. The Loca
 
 ## Running with Xcode
 
-Make sure you have a [Location Tracker Server](https://github.com/ibm-cds-labs/location-tracker-server-nodejs) configured and running. 
+Make sure you have a [Location Tracker Server](https://github.com/ibm-cds-labs/location-tracker-server-nodejs) or [Location Tracker Envoy Server](https://github.com/ibm-cds-labs/location-tracker-server-envoy) configured and running. 
 
 Clone the project and change into the project directory:
 
