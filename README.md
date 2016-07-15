@@ -4,19 +4,9 @@ The Location Tracker app is an iOS app developed in Swift to be used in conjunct
 
 ## How it works
 
-The Location Tracker app tracks user locations and stores those locations in Cloudant. 
-
-The Location Tracker app supports offline-first, Cloudant Sync, and is implemented on a database-per-user architecture. When a user registers, a specific database is created for that user and is used to track only that user's locations. In addition, the server configures continuous replication for each user-specific database into a consolidated database where all locations can be queried. See the architecture diagram below for more information:
-
-![Architecture of Location Tracker](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2ArchDiagram1.png)
-
-When you run the Location Track app for the first time register as a new user:
+The Location Tracker app tracks user locations and stores those locations in Cloudant. When you run the Location Track app for the first time register as a new user:
 
 ![Location Tracker App Register](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2AppRegister.png)
-
-Once you register, a new database will be created specifically to track locations for that user.
-
-![Location Tracker Cloudant User Location](http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/05/locationTracker2CloudantUserLoc.png)
 
 The Location Tracker app tracks users as they move. Blue pins mark each location recorded by the app. A blue line is drawn over the path the user has travelled. Each time the Location Tracker app records a new location a radius-based geo query is performed in Cloudant to find nearby places. The radius is represented by a green circle. Places are displayed as green pins:
 
