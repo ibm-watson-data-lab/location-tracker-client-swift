@@ -30,7 +30,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>The Location Tracker will track your location at all times. It will track &quot;significant changes&quot; while running in the background. See Apple&apos;s documentation for more information.</string>
+	<string>The Location Tracker will track your location at all times. It will track "significant changes" while running in the background. See Apple's documentation for more information.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The Location Tracker will only track your location while running in the foreground.</string>
 	<key>UILaunchStoryboardName</key>

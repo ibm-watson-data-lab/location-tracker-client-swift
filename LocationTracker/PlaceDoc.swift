@@ -23,44 +23,26 @@ class PlaceDoc: NSObject {
         super.init()
     }
     
-    convenience init?(aDict dict:[String:AnyObject]) {
-        if let body = dict["doc"] as? [String:AnyObject] {
-            var geometry: [String:AnyObject]? = body["geometry"] as? [String:AnyObject]
-            var coordinates: [Double]? = geometry!["coordinates"] as? [Double]
-            let latitude: Double = coordinates![1]
-            let longitude: Double = coordinates![0]
-            let name: String? = body["name"] as? String
-            let timestamp: Double? = body["created_at"] as? Double
-            self.init(docId: body["_id"] as? String, latitude: latitude, longitude: longitude, name: name!, timestamp: NSDate(timeIntervalSince1970: Double(timestamp!)/1000.0))
-        }
-        else {
-            print("Error initializing place from dictionary: \(dict)")
-            return nil
-        }
-    }
-    
-    convenience init?(aDoc doc:CDTDocumentRevision) {
-        if let body = doc.body {
-            var geometry: [String:AnyObject]? = body["geometry"] as? [String:AnyObject]
-            var coordinates: [Double]? = geometry!["coordinates"] as? [Double]
-            let latitude: Double = coordinates![1]
-            let longitude: Double = coordinates![0]
-            let name: String? = body["name"] as? String
-            let timestamp: Double? = body["created_at"] as? Double
-            self.init(docId: doc.docId, latitude: latitude, longitude: longitude, name: name!, timestamp: NSDate(timeIntervalSince1970: Double(timestamp!)/1000.0))
-        }
-        else {
-            print("Error initializing place from document: \(doc)")
-            return nil
-        }
-    }
-    
     func toDictionary() -> [String:AnyObject] {
         var dict:[String:AnyObject] = [String:AnyObject]();
-        dict["type"] = "Feature"
+        dict["_id"] = self.docId
         dict["created_at"] = self.timestamp
         dict["geometry"] = self.geometry!.toDictionary()
         dict["name"] = self.name
         return dict
     }
+    
+    
+    static func fromDictionary(dict:[String:AnyObject]) -> PlaceDoc? {
+        let docId = dict["_id"] as? String
+        var geometry = dict["geometry"] as? [String:AnyObject]
+        var coordinates: [Double]? = geometry!["coordinates"] as? [Double]
+        let latitude: Double = coordinates![1]
+        let longitude: Double = coordinates![0]
+        let name: String? = dict["name"] as? String
+        let timestamp: Double? = dict["created_at"] as? Double
+        return PlaceDoc(docId: dict["_id"] as? String, latitude: latitude, longitude: longitude, name: name!, timestamp: NSDate(timeIntervalSince1970: Double(timestamp!)/1000.0))
+    }
+    
+    
 }

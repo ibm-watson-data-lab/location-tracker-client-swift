@@ -27,6 +27,7 @@ class MapViewController: UIViewController, LocationMonitorDelegate, CDTHTTPInter
     var locationPins: [MapPin] = []
     var locationReplications = [SyncDirection: CDTReplicator]()
     var locationReplicationsPending : [SyncDirection: Bool] = [.Push:false,.Pull:false]
+    var watchApplicationContext: WatchApplicationContext?
     
     // Define two sync directions: push and pull.
     // .Push will copy local data from LocationTracker to Cloudant.
@@ -333,7 +334,7 @@ class MapViewController: UIViewController, LocationMonitorDelegate, CDTHTTPInter
             }
         }
         let rev = CDTDocumentRevision(docId: placeDoc.docId)
-        rev.body = NSMutableDictionary(dictionary:placeDoc.toDictionary())
+        rev.body = NSMutableDictionary(dictionary:placeDoc.getDocBodyAsDictionary())
         do {
             try placeDatastore!.createDocumentFromRevision(rev)
         }
@@ -385,13 +386,22 @@ class MapViewController: UIViewController, LocationMonitorDelegate, CDTHTTPInter
                     print(error)
                 }
                 if (dict != nil) {
+                    var latestPlaces: [PlaceDoc] = []
                     if let rows = dict["rows"] as? [[String:AnyObject]] {
                         for row in rows {
-                            if let placeDoc = PlaceDoc(aDict: row) {
+                            if let placeDoc = PlaceDoc.fromRow(row) {
+                                latestPlaces.append(placeDoc)
                                 self.addPlace(placeDoc)
                                 self.createPlaceDoc(placeDoc)
                             }
                         }
+                    }
+                    self.watchApplicationContext = WatchApplicationContext(lastLocation: lastLocation, latestPlaces: latestPlaces)
+                    do {
+                        try WatchSessionManager.sharedManager.updateWatch(self.watchApplicationContext!)
+                    }
+                    catch {
+                        // TODO:
                     }
                 }
             }
@@ -430,7 +440,7 @@ class MapViewController: UIViewController, LocationMonitorDelegate, CDTHTTPInter
             }
         }
         let rev = CDTDocumentRevision(docId: locationDoc.docId)
-        rev.body = NSMutableDictionary(dictionary:locationDoc.toDictionary())
+        rev.body = NSMutableDictionary(dictionary:locationDoc.getDocBodyAsDictionary())
         do {
             try locationDatastore!.createDocumentFromRevision(rev)
         }
