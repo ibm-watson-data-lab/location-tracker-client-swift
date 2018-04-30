@@ -73,9 +73,9 @@ class LoginViewController: UIViewController {
         request.HTTPBody = self.getLoginHttpBody(username, password: password)
         //
         let task = session.dataTaskWithRequest(request) {
-            (let data, let response, let error) in
+            (data, response, error) in
             NSOperationQueue.mainQueue().addOperationWithBlock {
-                guard let _:NSData = data, let _:NSURLResponse = response where error == nil else {
+                guard let _:NSData = data, let _:NSURLResponse = response, error == nil else {
                     self.hideActivityIndicatory()
                     self.showLoginErrorDialog()
                     return
