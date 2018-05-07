@@ -1,3 +1,5 @@
+:no_entry_sign: This project is no longer maintained
+
 # Location Tracker
 
 The Location Tracker app is an iOS app developed in Swift to be used in conjunction with the [Location Tracker Server](https://github.com/ibm-cds-labs/location-tracker-server-nodejs) or the [Location Tracker Envoy Server](https://github.com/ibm-cds-labs/location-tracker-server-envoy).
